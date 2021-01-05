@@ -9,7 +9,7 @@ class ListItemAdmin(admin.StackedInline):
 
 
 class ListAdmin(admin.ModelAdmin):
-    model = List
+    list_filter = ('product', )
     inlines = [ListItemAdmin]
 
 
