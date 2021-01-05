@@ -1,6 +1,7 @@
 from django.db import models
 
 from .validators import validate_format, validate_max_file_size
+from .image_handling import handle_main_page_image
 
 
 class MainPage(models.Model):
@@ -74,6 +75,10 @@ class Image(models.Model):
         null=True,
         default='',
     )
+
+    def save(self):
+        super().save()
+        handle_main_page_image(self.image.file)
 
     class Meta:
         verbose_name = 'Изображение на главной странице'
