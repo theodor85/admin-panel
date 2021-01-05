@@ -1,5 +1,7 @@
 from django.db import models
 
+from .validators import validate_format, validate_max_file_size
+
 
 class MainPage(models.Model):
     title = models.CharField(
@@ -63,6 +65,7 @@ class Image(models.Model):
     )
     image = models.ImageField(
         verbose_name='Файл изображения',
+        validators = [validate_format, validate_max_file_size],
     )
     description = models.CharField(
         max_length=255,
