@@ -1,0 +1,91 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">
+    
+    {% if no_content %}
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>Заголовок главной страницы</title>
+    {% else %}
+    <meta name="keywords" content="{{ page_data.keywords }}">
+    <meta name="description" content="{{ page_data.description }}">
+    <title>{{ page_data.title }}</title>
+    {% endif %}
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Piazzolla:wght@400;900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{% static '/css/swiper-bundle.min.css' %}">
+	<link rel="stylesheet" href="{% static '/css/style.css' %}">
+</head>
+<body>
+    <div class="wrapper">
+
+        <div class="content">
+            {% if no_content %}
+            <h1>В базе данных нет сохраненной страницы</h1>
+            {% else %}
+            <h1>{{ page_data.head }}</h1>
+
+            {% if images %}
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+
+                    {% for img in images %}
+                        <div class="swiper-slide">
+                            <img src="{{ img.image.url }}" alt="{{ img.description }}">
+                        </div>
+                    {% endfor %}
+
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            {% else %}
+                <b><p>Нет сохраненных изображений</p></b>
+            {% endif %}
+
+            <div class="intro-text">
+                {% if paragraphs %}
+
+                    {% for paragraph in paragraphs %}
+                        <p>{{ paragraph.text }}</p>
+                    {% endfor %}
+
+                {% else %}
+                    <b><p>Нет сохраненных текстов</p></b>
+                {% endif %}
+
+            </div>
+            <div class="products-list">
+                <h2>Продукты</h2>
+                <ul>
+                    
+                    {% for product in products %}
+                        {% if product.product_name %}
+                            <li><a href="{{ product.slug }}">{{ product.product_name }}</a></li>
+                        {% else %}
+                            <li><a href="{{ product.slug }}">{{ product.slug }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                </ul>
+            </div>
+            <div id="map" data-latitude="{{ page_data.coord_latitude }}" data-longitude="{{ page_data.coord_longitude }}"></div>
+            <h2>Отправить сообщение</h2>
+            <form id="form">
+                <input type="text" placeholder="Ваше имя" class="text-box" id="name" onfocus="blurEvent(this)" onkeyup="onChangeEvent(this)">
+                <input type="text" placeholder="Электронная почта" class="text-box" id="email" onfocus="blurEvent(this)" onkeyup="onChangeEvent(this)">
+                <input type="submit" value="Отправить" class="button" onclick="event.preventDefault();onSubmitEvent()">
+            </form>
+            {% endif %}
+        </div>
+    </div>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=28ba27e6-8179-45dd-8a90-a542e1883e67" type="text/javascript"></script>
+	<script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
