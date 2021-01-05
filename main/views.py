@@ -13,7 +13,10 @@ class IndexView(TemplateView):
         main_page = MainPage.objects.first()
         if main_page:
             context['page_data'] = main_page
-            context['paragraphs'] = main_page.paragraphs.all()
+            # разбить текст на абзацы
+            paragraphs = [p.strip() for p in main_page.text.split('\n')]
+            # отфильтровать пустые абзацы
+            context['paragraphs'] = filter(lambda p: bool(p), paragraphs)
             context['images'] = main_page.images.all()
             context['products'] = Product.objects.all().order_by('-date_added')
         else:

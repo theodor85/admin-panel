@@ -1,11 +1,6 @@
 from django.contrib import admin
 
-from .models import MainPage, Paragraph, Image
-
-
-class ParagraphAdmin(admin.StackedInline):
-    model = Paragraph
-    extra = 1
+from .models import MainPage, Image
 
 
 class ImageAdmin(admin.StackedInline):
@@ -14,7 +9,7 @@ class ImageAdmin(admin.StackedInline):
 
 
 class MainPageAdmin(admin.ModelAdmin):
-    inlines = [ImageAdmin, ParagraphAdmin]
+    inlines = [ImageAdmin, ]
 
 
 admin.site.register(MainPage, MainPageAdmin)

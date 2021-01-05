@@ -15,6 +15,12 @@ class MainPage(models.Model):
         null=True,
         default='',
     )
+    text = models.TextField(
+        verbose_name='Текст под слайдером',
+        blank=True,
+        null=True,
+        default='',
+    )
     keywords = models.TextField(
         verbose_name='Тег keywords',
         blank=True,
@@ -46,27 +52,6 @@ class MainPage(models.Model):
 
     def __str__(self):
         return f'Главная страница: {self.title}'
-
-
-class Paragraph(models.Model):
-
-    page = models.ForeignKey(
-        MainPage,
-        on_delete=models.CASCADE,
-        related_name='paragraphs',
-    )
-    text = models.TextField(
-        blank=True,
-        null=True,
-        default='',
-    )
-
-    class Meta:
-        verbose_name = 'Абзац текста на главной странице'
-        verbose_name_plural = 'Абзацы текста на главной странице'
-
-    def __str__(self):
-        return f'"{self.text[:50]}"'
 
 
 class Image(models.Model):
