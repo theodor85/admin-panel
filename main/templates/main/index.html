@@ -63,14 +63,17 @@
             <div class="products-list">
                 <h2>Продукты</h2>
                 <ul>
-                    
-                    {% for product in products %}
-                        {% if product.product_name %}
-                            <li><a href="{{ product.slug }}">{{ product.product_name }}</a></li>
-                        {% else %}
-                            <li><a href="{{ product.slug }}">{{ product.slug }}</a></li>
-                        {% endif %}
-                    {% endfor %}
+                    {% if products %}
+                        {% for product in products %}
+                            {% if product.product_name %}
+                                <li><a href="{{ product.slug }}">{{ product.product_name }}</a></li>
+                            {% else %}
+                                <li><a href="{{ product.slug }}">{{ product.slug }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <b><p>Нет сохраненных продуктов</p></b>
+                    {% endif %}
 
                 </ul>
             </div>
