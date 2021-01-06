@@ -79,6 +79,10 @@ class Image(models.Model):
     def save(self):
         super().save()
         handle_main_page_image(self.image.file)
+    
+    def delete(self, *args, **kwargs):
+        self.image.delete(save=False)
+        super().delete(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Изображение на главной странице'

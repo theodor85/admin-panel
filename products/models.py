@@ -48,6 +48,10 @@ class Product(models.Model):
     def __str__(self):
         return f'{self.product_name}' if self.product_name else self.slug
 
+    def delete(self, *args, **kwargs):
+        self.photo.delete(save=False)
+        super().delete(*args, **kwargs)
+
 
 class List(models.Model):
     head = models.CharField(
